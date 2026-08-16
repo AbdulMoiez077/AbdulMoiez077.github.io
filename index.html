@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abdul Moiez — Data Scientist &amp; RAG Systems Engineer</title>
+<meta name="description" content="Portfolio of Abdul Moiez — Data Scientist specializing in AI, RAG systems, and data engineering.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0A0E17;
+    --panel: #10151F;
+    --panel-2: #161D2C;
+    --line: #232C41;
+    --text: #E7EAF1;
+    --text-dim: #8B96AA;
+    --teal: #5EEAD4;
+    --amber: #F2B84B;
+    --teal-dim: rgba(94,234,212,0.12);
+    --amber-dim: rgba(242,184,75,0.12);
+    --radius: 3px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--teal);color:var(--bg);}
+
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-spacing:-0.01em;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:inherit;text-decoration:none;}
+
+  /* background grid texture */
+  .grid-bg{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:64px 64px;
+    opacity:0.35;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+  }
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 32px;position:relative;z-index:1;}
+
+  /* NAV */
+  header.nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(10,14,23,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1080px;margin:0 auto;padding:18px 32px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;display:flex;align-items:center;gap:8px;}
+  .logo .dot{width:8px;height:8px;background:var(--teal);border-radius:50%;box-shadow:0 0 12px var(--teal);}
+  nav.links{display:flex;gap:28px;font-size:13px;}
+  nav.links a{
+    color:var(--text-dim);
+    font-family:'JetBrains Mono',monospace;
+    transition:color 0.2s;
+    position:relative;
+  }
+  nav.links a:hover{color:var(--teal);}
+  nav.links a::before{content:'./';color:var(--line);margin-right:2px;}
+  .nav-cta{
+    font-family:'JetBrains Mono',monospace;font-size:12px;
+    border:1px solid var(--teal);color:var(--teal);
+    padding:8px 14px;border-radius:var(--radius);
+    transition:all 0.2s;
+  }
+  .nav-cta:hover{background:var(--teal);color:var(--bg);}
+  @media (max-width:760px){ nav.links{display:none;} }
+
+  /* HERO */
+  .hero{padding:96px 0 64px;position:relative;}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--teal);
+    display:flex;align-items:center;gap:10px;margin-bottom:28px;
+  }
+  .eyebrow .bar{width:28px;height:1px;background:var(--teal);}
+  h1.title{
+    font-size:clamp(40px,7vw,76px);
+    font-weight:700;
+    line-height:1.02;
+    margin-bottom:20px;
+  }
+  h1.title .accent{color:var(--teal);}
+  .role-line{
+    font-family:'JetBrains Mono',monospace;
+    font-size:clamp(14px,2vw,18px);
+    color:var(--text-dim);
+    margin-bottom:28px;
+  }
+  .role-line .amber-txt{color:var(--amber);}
+  .hero-desc{max-width:600px;color:var(--text-dim);font-size:16px;margin-bottom:36px;}
+  .hero-actions{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:72px;}
+  .btn{
+    font-family:'JetBrains Mono',monospace;font-size:13px;padding:12px 22px;
+    border-radius:var(--radius);transition:all 0.2s;display:inline-flex;align-items:center;gap:8px;
+  }
+  .btn-primary{background:var(--teal);color:var(--bg);font-weight:600;}
+  .btn-primary:hover{background:#83f0dd;transform:translateY(-1px);}
+  .btn-ghost{border:1px solid var(--line);color:var(--text);}
+  .btn-ghost:hover{border-color:var(--text-dim);}
+
+  /* PIPELINE - signature element */
+  .pipeline{
+    display:flex;align-items:center;gap:0;flex-wrap:wrap;
+    border:1px solid var(--line);background:var(--panel);
+    border-radius:var(--radius);overflow:hidden;
+  }
+  .p-node{
+    flex:1;min-width:150px;padding:20px 18px;
+    border-right:1px solid var(--line);
+    position:relative;
+  }
+  .p-node:last-child{border-right:none;}
+  .p-tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+  .p-val{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;}
+  .p-node:nth-child(1) .p-val{color:var(--text);}
+  .p-node:nth-child(2) .p-val, .p-node:nth-child(3) .p-val{color:var(--teal);}
+  .p-node:nth-child(4) .p-val, .p-node:nth-child(5) .p-val{color:var(--amber);}
+  .p-arrow{
+    position:absolute;right:-1px;top:50%;transform:translateY(-50%);
+    width:16px;height:16px;background:var(--bg);border:1px solid var(--line);
+    border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:9px;color:var(--text-dim);z-index:2;
+  }
+  @media (max-width:760px){ .p-node{border-right:none;border-bottom:1px solid var(--line);} .p-arrow{display:none;} }
+
+  /* SECTION GENERIC */
+  section{padding:88px 0;border-top:1px solid var(--line);position:relative;}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:48px;}
+  .sec-num{font-family:'JetBrains Mono',monospace;color:var(--teal);font-size:14px;}
+  .sec-title{font-size:clamp(26px,4vw,36px);font-weight:600;}
+  .sec-sub{color:var(--text-dim);font-size:14px;font-family:'JetBrains Mono',monospace;margin-left:auto;}
+  @media (max-width:600px){ .sec-sub{display:none;} }
+
+  /* ABOUT */
+  .about-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;}
+  .about-grid p{color:var(--text-dim);margin-bottom:16px;max-width:560px;}
+  .about-grid p .hl{color:var(--text);}
+  .stat-box{border:1px solid var(--line);padding:20px;border-radius:var(--radius);background:var(--panel);margin-bottom:14px;}
+  .stat-box .num{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--amber);}
+  .stat-box .lbl{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.06em;margin-top:4px;}
+  @media (max-width:760px){ .about-grid{grid-template-columns:1fr;} }
+
+  /* SKILLS */
+  .skill-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+  .skill-cat{background:var(--panel);padding:26px;}
+  .skill-cat h3{font-size:14px;font-family:'JetBrains Mono',monospace;color:var(--teal);margin-bottom:16px;text-transform:uppercase;letter-spacing:0.05em;}
+  .skill-cat ul{list-style:none;}
+  .skill-cat li{
+    color:var(--text-dim);font-size:14px;padding:6px 0;
+    border-bottom:1px dashed var(--line);
+    display:flex;justify-content:space-between;
+  }
+  .skill-cat li:last-child{border-bottom:none;}
+  .skill-cat li::before{content:'';}
+
+  /* PROJECTS */
+  .project-list{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+  .project{background:var(--panel);padding:32px;display:grid;grid-template-columns:60px 1fr auto;gap:24px;align-items:start;transition:background 0.2s;}
+  .project:hover{background:var(--panel-2);}
+  .proj-idx{font-family:'JetBrains Mono',monospace;color:var(--line);font-size:28px;font-weight:600;}
+  .proj-title{font-size:19px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .proj-desc{color:var(--text-dim);font-size:14px;max-width:640px;margin-bottom:14px;}
+  .proj-tags{display:flex;flex-wrap:wrap;gap:8px;}
+  .proj-tags span{
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);
+    background:var(--teal-dim);padding:4px 9px;border-radius:2px;
+  }
+  .proj-link{
+    font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--amber);
+    border:1px solid var(--amber-dim);padding:8px 14px;border-radius:var(--radius);
+    white-space:nowrap;transition:all 0.2s;height:fit-content;
+  }
+  .proj-link:hover{background:var(--amber);color:var(--bg);border-color:var(--amber);}
+  .proj-link.disabled{color:var(--text-dim);border-color:var(--line);opacity:0.6;pointer-events:none;}
+  @media (max-width:700px){ .project{grid-template-columns:1fr;} .proj-idx{display:none;} }
+
+  /* EDUCATION / CERTS */
+  .timeline{border-left:1px solid var(--line);margin-left:6px;}
+  .t-item{padding:0 0 32px 28px;position:relative;}
+  .t-item::before{
+    content:'';position:absolute;left:-6px;top:4px;width:11px;height:11px;
+    border-radius:50%;background:var(--bg);border:2px solid var(--teal);
+  }
+  .t-item:last-child{padding-bottom:0;}
+  .t-year{font-family:'JetBrains Mono',monospace;color:var(--teal);font-size:12px;margin-bottom:6px;}
+  .t-title{font-weight:600;font-size:17px;margin-bottom:4px;}
+  .t-sub{color:var(--text-dim);font-size:14px;}
+
+  .cert-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:8px;}
+  .cert{border:1px solid var(--line);background:var(--panel);padding:18px 20px;border-radius:var(--radius);}
+  .cert .c-name{font-weight:600;font-size:15px;margin-bottom:4px;}
+  .cert .c-meta{color:var(--text-dim);font-size:13px;font-family:'JetBrains Mono',monospace;}
+
+  /* CONTACT */
+  .contact-panel{
+    border:1px solid var(--line);background:var(--panel);border-radius:var(--radius);
+    padding:56px 40px;text-align:center;
+  }
+  .contact-panel h2{font-size:clamp(26px,5vw,42px);margin-bottom:16px;}
+  .contact-panel p{color:var(--text-dim);max-width:480px;margin:0 auto 32px;}
+  .contact-links{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+
+  footer{padding:32px;text-align:center;color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:12px;border-top:1px solid var(--line);}
+  footer .dot{color:var(--teal);}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity 0.6s ease, transform 0.6s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="logo"><span class="dot"></span>Abdul Moiez</div>
+    <nav class="links">
+      <a href="#about">about</a>
+      <a href="#skills">skills</a>
+      <a href="#projects">projects</a>
+      <a href="#education">education</a>
+    </nav>
+    <a class="nav-cta" href="#contact">contact()</a>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero" style="border-top:none;">
+    <div class="eyebrow"><span class="bar"></span>LAHORE, PAKISTAN — AVAILABLE FOR OPPORTUNITIES</div>
+    <h1 class="title">Abdul <span class="accent">Moiez</span></h1>
+    <div class="role-line">data_scientist <span class="amber-txt">·</span> rag_systems_engineer <span class="amber-txt">·</span> data_engineer</div>
+    <p class="hero-desc">I build systems that turn raw, messy data into grounded answers — pairing machine learning and cloud data engineering with retrieval-augmented generation to ship AI applications that reason over real, live information rather than guesswork.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#projects">View projects →</a>
+      <a class="btn btn-ghost" href="mailto:abdulmoiez077@gmail.com">Email me</a>
+      <a class="btn btn-ghost" href="https://github.com/AbdulMoiez077" target="_blank" rel="noopener">GitHub</a>
+    </div>
+
+    <div class="pipeline reveal">
+      <div class="p-node"><div class="p-tag">01 · input</div><div class="p-val">Raw Data</div><div class="p-arrow">→</div></div>
+      <div class="p-node"><div class="p-tag">02 · engineer</div><div class="p-val">ETL / Warehouse</div><div class="p-arrow">→</div></div>
+      <div class="p-node"><div class="p-tag">03 · retrieve</div><div class="p-val">RAG / Vector Search</div><div class="p-arrow">→</div></div>
+      <div class="p-node"><div class="p-tag">04 · model</div><div class="p-val">ML / LLM</div><div class="p-arrow">→</div></div>
+      <div class="p-node"><div class="p-tag">05 · output</div><div class="p-val">Decision / Insight</div></div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="sec-head"><span class="sec-num">01</span><h2 class="sec-title">About</h2><span class="sec-sub">// summary.txt</span></div>
+    <div class="about-grid">
+      <div class="reveal">
+        <p>I'm a <span class="hl">Data Science graduate</span> with hands-on experience across the full stack of data work — from wrangling and modeling data to shipping AI-powered applications people actually use.</p>
+        <p>My focus sits at the intersection of <span class="hl">machine learning, cloud data platforms, and Retrieval-Augmented Generation</span>. I've built full-stack RAG applications on FastAPI and React, engineered pipelines across Azure, Databricks and Snowflake, and turned raw datasets into dashboards decision-makers actually read.</p>
+        <p>I care about solutions that are grounded, explainable and genuinely useful — not just technically impressive.</p>
+      </div>
+      <div class="reveal">
+        <div class="stat-box"><div class="num">4+</div><div class="lbl">AI &amp; ML projects shipped</div></div>
+        <div class="stat-box"><div class="num">3</div><div class="lbl">Cloud platforms — Azure, Databricks, Snowflake</div></div>
+        <div class="stat-box"><div class="num">2026</div><div class="lbl">BS Data Science, University of Central Punjab</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="sec-head"><span class="sec-num">02</span><h2 class="sec-title">Skills</h2><span class="sec-sub">// stack.json</span></div>
+    <div class="skill-groups reveal">
+      <div class="skill-cat">
+        <h3>Programming</h3>
+        <ul><li>Python</li><li>SQL</li><li>C++</li><li>HTML / CSS</li></ul>
+      </div>
+      <div class="skill-cat">
+        <h3>Data Science &amp; AI</h3>
+        <ul><li>Machine Learning</li><li>Data Analysis</li><li>Data Engineering</li><li>Big Data Analytics</li><li>RAG Systems</li></ul>
+      </div>
+      <div class="skill-cat">
+        <h3>Visualization</h3>
+        <ul><li>Power BI</li><li>Tableau</li></ul>
+      </div>
+      <div class="skill-cat">
+        <h3>Cloud &amp; Platforms</h3>
+        <ul><li>Microsoft Azure</li><li>Databricks</li><li>Snowflake</li></ul>
+      </div>
+      <div class="skill-cat">
+        <h3>Tools &amp; Frameworks</h3>
+        <ul><li>Streamlit</li><li>FastAPI</li><li>React</li><li>PostgreSQL</li><li>ChromaDB</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="sec-head"><span class="sec-num">03</span><h2 class="sec-title">Projects</h2><span class="sec-sub">// featured_work</span></div>
+    <div class="project-list reveal">
+
+      <div class="project">
+        <div class="proj-idx">01</div>
+        <div>
+          <div class="proj-title">VoigerAI — AI-Powered Travel Planning System</div>
+          <div class="proj-desc">A full-stack RAG application built on FastAPI and React, integrating PostgreSQL, ChromaDB and Groq AI to generate personalized, context-aware trip plans — combining retrieval-augmented generation with live open data APIs for budgeting, accommodation selection and route optimization.</div>
+          <div class="proj-tags"><span>FastAPI</span><span>React</span><span>ChromaDB</span><span>PostgreSQL</span><span>RAG</span></div>
+        </div>
+        <a class="proj-link" href="https://github.com/AbdulMoiez077/VoigerAI_Project/tree/main" target="_blank" rel="noopener">View repo →</a>
+      </div>
+
+      <div class="project">
+        <div class="proj-idx">02</div>
+        <div>
+          <div class="proj-title">RAG-Based Student Career Assistant</div>
+          <div class="proj-desc">An AI assistant using Retrieval-Augmented Generation to deliver personalized, context-grounded career guidance instead of generic advice — with retrieval relevance tuned via ML techniques to improve recommendation accuracy and user interaction quality.</div>
+          <div class="proj-tags"><span>RAG</span><span>Python</span><span>Retrieval Tuning</span></div>
+        </div>
+        <a class="proj-link disabled">Private repo</a>
+      </div>
+
+      <div class="project">
+        <div class="proj-idx">03</div>
+        <div>
+          <div class="proj-title">Customer Churn Prediction System</div>
+          <div class="proj-desc">A churn prediction system using Random Forest, XGBoost and LightGBM with engineered features (tenure groups, service usage), built as a complete sklearn Pipeline + ColumnTransformer, with SHAP explainability to identify key churn drivers and target high-risk customers.</div>
+          <div class="proj-tags"><span>XGBoost</span><span>LightGBM</span><span>scikit-learn</span><span>SHAP</span></div>
+        </div>
+        <a class="proj-link disabled">Private repo</a>
+      </div>
+
+      <div class="project">
+        <div class="proj-idx">04</div>
+        <div>
+          <div class="proj-title">Credit Card Fraud Detection</div>
+          <div class="proj-desc">A machine learning system for flagging fraudulent transactions in highly imbalanced financial data, applying classification models and feature engineering to catch fraud patterns while minimizing false positives.</div>
+          <div class="proj-tags"><span>Python</span><span>Machine Learning</span><span>Classification</span></div>
+        </div>
+        <a class="proj-link" href="https://github.com/AbdulMoiez077/Credit_Card_Fraud_Detection" target="_blank" rel="noopener">View repo →</a>
+      </div>
+
+      <div class="project">
+        <div class="proj-idx">05</div>
+        <div>
+          <div class="proj-title">Hangman Game (C++)</div>
+          <div class="proj-desc">A console-based Hangman game built in C++ to reinforce core programming logic and problem-solving fundamentals.</div>
+          <div class="proj-tags"><span>C++</span><span>Console App</span></div>
+        </div>
+        <a class="proj-link disabled">Private repo</a>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="sec-head"><span class="sec-num">04</span><h2 class="sec-title">Education</h2><span class="sec-sub">// timeline</span></div>
+    <div class="timeline reveal">
+      <div class="t-item">
+        <div class="t-year">2026</div>
+        <div class="t-title">BS in Data Science</div>
+        <div class="t-sub">University of Central Punjab</div>
+      </div>
+      <div class="t-item">
+        <div class="t-year">2021</div>
+        <div class="t-title">Intermediate in Computer Science (ICS)</div>
+        <div class="t-sub">Punjab Group of Colleges</div>
+      </div>
+      <div class="t-item">
+        <div class="t-year">2019</div>
+        <div class="t-title">Matriculation, Computer Science</div>
+        <div class="t-sub">Vesper School System</div>
+      </div>
+    </div>
+
+    <div style="margin-top:56px;" class="reveal">
+      <h3 style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--teal);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;">Certifications</h3>
+      <div class="cert-list">
+        <div class="cert"><div class="c-name">Web Designing &amp; Development</div><div class="c-meta">NAVTTC · 2022</div></div>
+        <div class="cert"><div class="c-name">Microsoft Office Specialist</div><div class="c-meta">Microsoft · 2021</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="contact-panel reveal">
+      <h2>Let's build something grounded.</h2>
+      <p>Open to data science, AI engineering and data engineering roles. Reach out — I usually reply within a day.</p>
+      <div class="contact-links">
+        <a class="btn btn-primary" href="mailto:abdulmoiez077@gmail.com">abdulmoiez077@gmail.com</a>
+        <a class="btn btn-ghost" href="tel:+923071140091">+92 307 1140091</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/abdul-moiez-data-scientist" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn btn-ghost" href="https://github.com/AbdulMoiez077" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer><span class="dot">●</span> built by Abdul Moiez — Lahore, Pakistan</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{threshold:0.15});
+  reveals.forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
